@@ -1,0 +1,8 @@
+# curl 'https://vnvxxgqunlqtttqxjavc.supabase.co/rest/v1/todo' -H "Accept-Profile: todo" -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZudnh4Z3F1bmxxdHR0cXhqYXZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODkyMTEzNzIsImV4cCI6MjAwNDc4NzM3Mn0.sk0z4ZA8j1rDfbSk2zNmiDIo65mqoZYVEzruDftZRQM" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZudnh4Z3F1bmxxdHR0cXhqYXZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODkyMTEzNzIsImV4cCI6MjAwNDc4NzM3Mn0.sk0z4ZA8j1rDfbSk2zNmiDIo65mqoZYVEzruDftZRQM"
+
+
+
+curl 'http://localhost:54321/rest/v1/todo' \
+  -H "Accept-Profile: todo" \
+  -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0"

@@ -1,10 +1,10 @@
 {
-  "name": "@myturborepo/web",
+  "name": "@nuxtsupabucket/web",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "PORT=3020 nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "nuxt": "3.5.1",
-    "@myturborepo/tsconfig": "workspace:*",
-    "@myturborepo/ui": "workspace:*"
+    "@nuxtsupabucket/tsconfig": "workspace:*",
+    "@nuxtsupabucket/ui": "workspace:*"
   }
 }

@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vitepress dev pages",
+    "dev": "PORT=3030 vitepress dev pages",
     "build": "vitepress build pages",
     "serve": "vitepress serve pages"
   },
   "devDependencies": {
-    "@myturborepo/ui": "workspace:*",
+    "@nuxtsupabucket/ui": "workspace:*",
     "vitepress": "1.0.0-beta.1",
     "vue": "^3.3.4"
   }

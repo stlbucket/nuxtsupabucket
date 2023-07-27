@@ -1,0 +1,20 @@
+query AppTenantSubscriptions(
+  $appTenantId: UUID!
+)  {
+  allAppTenantSubscriptions(condition: {
+    appTenantId: $appTenantId
+  }) {
+    nodes {
+      id
+      licensePackKey
+      appTenant: appTenantByAppTenantId {
+        id
+        name
+        type
+      }
+      licenses: licensesByAppTenantSubscriptionId {
+        totalCount
+      }
+    }
+  }
+}

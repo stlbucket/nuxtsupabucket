@@ -1,5 +1,11 @@
 <template>
-  <div>
-    <NuxtWelcome />
-  </div>
+  <UContainer class="app-container">
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </UContainer>
+  <UNotifications />
 </template>
+
+<script lang="ts" setup>
+</script>

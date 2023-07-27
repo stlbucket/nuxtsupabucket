@@ -1,0 +1,127 @@
+query TodoById(
+  $id: UUID!
+) {
+  todoById(id: $id) {
+    id
+    name
+    description
+    type
+    status
+    createdAt
+    updatedAt
+    parentTodoId
+    owner: appUserTenancyByAppUserTenancyId {
+      id
+      email
+      displayName
+    }
+    parent: todoByParentTodoId {
+      id
+      name
+      description
+      type
+      status
+      createdAt
+      updatedAt
+      parentTodoId
+      owner: appUserTenancyByAppUserTenancyId {
+        id
+        email
+        displayName
+      }
+      parent: todoByParentTodoId {
+        id
+        name
+        description
+        type
+        status
+        createdAt
+        updatedAt
+        parentTodoId
+        owner: appUserTenancyByAppUserTenancyId {
+          id
+          email
+          displayName
+        }
+        children: todosByParentTodoIdList {
+          id
+          name
+          description
+          type
+          status
+          createdAt
+          updatedAt
+          parentTodoId
+          owner: appUserTenancyByAppUserTenancyId {
+            id
+            email
+            displayName
+          }
+          children: todosByParentTodoIdList {
+            id
+            name
+            type
+            status
+            owner: appUserTenancyByAppUserTenancyId {
+              id
+              email
+              displayName
+            }
+          }
+        }
+      }
+      children: todosByParentTodoIdList {
+        id
+        name
+        description
+        type
+        status
+        createdAt
+        updatedAt
+        parentTodoId
+        owner: appUserTenancyByAppUserTenancyId {
+          id
+          email
+          displayName
+        }
+        children: todosByParentTodoIdList {
+          id
+          name
+          type
+          status
+          owner: appUserTenancyByAppUserTenancyId {
+            id
+            email
+            displayName
+          }
+        }
+      }
+    }
+    children: todosByParentTodoIdList {
+      id
+      name
+      description
+      type
+      status
+      createdAt
+      updatedAt
+      parentTodoId
+      owner: appUserTenancyByAppUserTenancyId {
+        id
+        email
+        displayName
+      }
+      children: todosByParentTodoIdList {
+        id
+        name
+        type
+        status
+        owner: appUserTenancyByAppUserTenancyId {
+          id
+          email
+          displayName
+        }
+      }
+    }
+  }
+}

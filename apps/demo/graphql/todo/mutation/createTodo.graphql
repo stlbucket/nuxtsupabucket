@@ -1,0 +1,21 @@
+mutation CreateTodo(
+  $name: String!
+  $description: String
+  $parentTodoId: UUID
+) {
+  createTodo(input: {
+    _name: $name
+    _description: $description
+    _parentTodoId: $parentTodoId
+  }) {
+    todo {
+      id
+      name
+      description
+      status
+      type
+      createdAt
+      updatedAt
+    }
+  }
+}

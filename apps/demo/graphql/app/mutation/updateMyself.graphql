@@ -1,0 +1,23 @@
+mutation UpdateMySelf(
+	$displayName: String!
+  $firstName: String
+  $lastName: String
+  $phone: String
+) {
+  updateMyself(input: {
+    _displayName: $displayName
+    _firstName: $firstName
+    _lastName: $lastName
+    _phone: $phone
+  }) {
+    appUser {
+      id
+      email
+      firstName
+      lastName
+      phone
+      displayName
+      isPublic
+    }    
+  }
+}

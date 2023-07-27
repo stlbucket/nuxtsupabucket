@@ -1,0 +1,39 @@
+query SearchTodos(
+  $searchTerm: String
+  $todoType: TodoType
+  $rootsOnly: Boolean
+) {
+   searchTodos (
+    _options: {
+      searchTerm: $searchTerm
+      todoType: $todoType
+      rootsOnly: $rootsOnly
+  	}
+  ){
+    nodes {
+      id
+      name
+      description
+      status
+      type
+      createdAt
+      updatedAt
+      owner: appUserTenancyByAppUserTenancyId {
+        id
+        email
+        displayName
+      }
+      parentTodo: todoByParentTodoId {
+        id
+        name
+        description
+      }
+      appUserTenancy: appUserTenancyByAppUserTenancyId {
+        id
+        email
+        displayName
+        appTenantName
+      }
+    }
+  }
+}

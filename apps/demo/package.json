@@ -21,14 +21,11 @@
     "vue": "latest"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.4.11",
     "@types/jsonwebtoken": "^9.0.2",
     "graphile-utils": "^4.13.0",
     "jsonwebtoken": "^9.0.1",
     "jwks-rsa": "^3.0.1",
     "nuxt-graphql-client": "^0.2.27",
-    "pinia": "^2.1.4",
-    "postgraphile": "^4.13.0",
-    "supabase": "^1.77.9"
+    "postgraphile": "^4.13.0"
   }
 }

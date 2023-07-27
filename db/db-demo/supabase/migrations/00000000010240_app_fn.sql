@@ -1,15 +1,18 @@
------------------------------------------------------------------ become_support
-CREATE OR REPLACE FUNCTION app_fn.configure_user_metadata(_app_user_id uuid)
+----------------------------------------------------------------- configure_user_metadata
+CREATE OR REPLACE FUNCTION app_fn.configure_user_metadata(_app_user_id uuid, _actual_app_user_tenancy uuid default null)
   RETURNS void
   LANGUAGE plpgsql
   VOLATILE
   SECURITY DEFINER
   AS $$
   DECLARE
-    
+    _app_user_claims app_fn.app_user_claims;
   BEGIN
+    _app_user_claims := app_fn.current_app_user_claims(_app_user_id);
+    _app_user_claims.actual_app_user_tenancy_id = _actual_app_user_tenancy;
+
     update auth.users set 
-      raw_user_meta_data = (select to_jsonb(app_fn.current_app_user_claims(_app_user_id)))
+      raw_user_meta_data = (select to_jsonb(_app_user_claims))
     where id = _app_user_id
     ;
   end;
@@ -880,11 +883,12 @@ CREATE OR REPLACE FUNCTION app_fn.demo_app_user_tenancies()
   DECLARE
   BEGIN
     return query
-    select aut.*
+    select distinct
+      aut.*
     from app.app_user_tenancy aut
     join app.app_tenant t on t.id = aut.app_tenant_id
-    where t.type = 'demo'
-    or t.type = 'anchor'
+    where (t.type = 'demo' or t.type = 'anchor')
+    and aut.display_name != 'Site Support'
     ;
   end;
   $function$
@@ -1046,10 +1050,13 @@ CREATE OR REPLACE FUNCTION app_fn.become_support(_app_tenant_id uuid, _app_user_
   DECLARE
     _app_tenant app.app_tenant;
     _app_user_tenancy app.app_user_tenancy;
+    _actual_app_user_tenancy app.app_user_tenancy;
   BEGIN
       select * into _app_tenant from app.app_tenant where id = _app_tenant_id;
 
-      update app.app_user_tenancy set status = 'supporting' where app_user_id = _app_user_id and status = 'active';
+      update app.app_user_tenancy set status = 'supporting' 
+      where app_user_id = _app_user_id and status = 'active'
+      returning * into _actual_app_user_tenancy;
 
       insert into app.app_user_tenancy(
         app_tenant_id
@@ -1083,7 +1090,8 @@ CREATE OR REPLACE FUNCTION app_fn.become_support(_app_tenant_id uuid, _app_user_
         ,(select id from app.app_tenant_subscription where app_tenant_id = _app_user_tenancy.app_tenant_id limit 1)
         ,'app-admin-support'
       )
-      on conflict (app_user_tenancy_id, license_type_key) DO UPDATE SET updated_at = current_timestamp
+      on conflict (app_user_tenancy_id, license_type_key) DO NOTHING
+      -- on conflict (app_user_tenancy_id, license_type_key) DO UPDATE SET updated_at = current_timestamp
       ;
 
       insert into app.license(
@@ -1103,10 +1111,16 @@ CREATE OR REPLACE FUNCTION app_fn.become_support(_app_tenant_id uuid, _app_user_
       join app.license_type lt on lt.key = lplt.license_Type_key
       where ats.app_tenant_id = _app_user_tenancy.app_tenant_id
       and lt.permission_level = 'admin'
-      on conflict (app_user_tenancy_id, license_type_key) DO UPDATE SET updated_at = current_timestamp
+      and not exists (
+        select id from app.license
+        where app_user_tenancy_id = _app_user_tenancy.id
+        and license_type_key = lplt.license_Type_key
+      )
+      on conflict (app_user_tenancy_id, license_type_key) DO NOTHING
+      -- on conflict (app_user_tenancy_id, license_type_key) DO UPDATE SET updated_at = current_timestamp
       ;
 
-      perform app_fn.configure_user_metadata(_app_user_tenancy.app_user_id);
+      perform app_fn.configure_user_metadata(_app_user_tenancy.app_user_id, _actual_app_user_tenancy.id);
       -- update auth.users set 
       --   raw_user_meta_data = (select to_jsonb(app_fn.current_app_user_claims(_app_user_tenancy.app_user_id)))
       -- where id = _app_user_tenancy.app_user_id

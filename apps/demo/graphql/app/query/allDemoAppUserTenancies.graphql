@@ -1,0 +1,8 @@
+query DemoAppUserTenancies {
+  demoAppUserTenanciesList {
+    id
+    email
+    appTenantName
+    status
+  }
+}

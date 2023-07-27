@@ -6,6 +6,7 @@ create type app_fn.app_user_claims as (
   app_user_id uuid
   ,app_tenant_id uuid
   ,app_user_tenancy_id uuid
+  ,actual_app_user_tenancy_id uuid
   ,app_user_status app.app_user_status
   ,permissions citext[]
   ,email citext

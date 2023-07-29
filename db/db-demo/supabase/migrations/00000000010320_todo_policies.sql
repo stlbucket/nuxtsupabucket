@@ -33,3 +33,9 @@ alter table todo.todo enable row level security;
       USING (auth_ext.app_tenant_id()::uuid = app_tenant_id)
       WITH CHECK (auth_ext.app_tenant_id()::uuid = app_tenant_id)
       ;
+
+    CREATE POLICY manage_all_support ON todo.todo
+      FOR ALL
+      USING (auth_ext.has_permission('p:app-admin-support'))
+      WITH CHECK (auth_ext.has_permission('p:app-admin-support'))
+      ;

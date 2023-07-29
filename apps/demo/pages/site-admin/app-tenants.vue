@@ -32,6 +32,7 @@
 </template>
 
 <script lang="ts" setup>
+  const supabase = useSupabaseAuthClient()
   const appTenants = ref([])
   const loadData = async () => {
     const result = await GqlAllAppTenants()
@@ -44,7 +45,7 @@
       appTenantId: appTenant.id
     })
     reloadNuxtApp({
-      path: '/',
+      path: '/todo',
       force: true
     })    
 

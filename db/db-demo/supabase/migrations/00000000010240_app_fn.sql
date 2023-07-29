@@ -569,7 +569,7 @@ CREATE OR REPLACE FUNCTION app_fn.create_app_tenant(_name citext, _identifier ci
     ;
 
     perform app_fn.subscribe_tenant_to_license_pack(_app_tenant.id, 'app');
-    perform app_fn.subscribe_tenant_to_license_pack(_app_tenant.id, 'my-app');
+    -- perform app_fn.subscribe_tenant_to_license_pack(_app_tenant.id, 'my-app');
     perform app_fn.invite_user(_app_tenant.id, _email, 'admin');
 
     return _app_tenant;

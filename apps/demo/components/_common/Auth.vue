@@ -54,7 +54,7 @@
     })
     if (error) alert(error.toString())
     reloadNuxtApp({
-      path: '/',
+      path: '/site-admin/app-tenants',
       force: true
     })    
   }

@@ -390,11 +390,11 @@ CREATE OR REPLACE FUNCTION todo_fn_api.search_todos(_options todo_fn.search_todo
   AS $$
   DECLARE
   BEGIN
-    return query select * from todo_fn.search_todos(_options);
+    return query select * from todo_fn.search_todos(_options, auth_ext.app_tenant_id());
   end;
   $$;
 
-CREATE OR REPLACE FUNCTION todo_fn.search_todos(_options todo_fn.search_todos_options)
+CREATE OR REPLACE FUNCTION todo_fn.search_todos(_options todo_fn.search_todos_options, _app_tenant_id uuid)
   RETURNS setof todo.todo
   LANGUAGE plpgsql
   stable
@@ -404,12 +404,14 @@ CREATE OR REPLACE FUNCTION todo_fn.search_todos(_options todo_fn.search_todos_op
     _use_options todo_fn.search_todos_options;
   BEGIN
     -- TODO: add paging options
+    raise exception 'ati: %', _app_tenant_id;
 
     return query
     select t.* 
     from todo.todo t
     join app.app_tenant a on a.id = t.app_tenant_id
-    where (
+    where t.app_tenant_id = _app_tenant_id
+    and (
       _options.search_term is null 
       or t.name like '%'||_options.search_term||'%'
       or t.description like '%'||_options.search_term||'%'

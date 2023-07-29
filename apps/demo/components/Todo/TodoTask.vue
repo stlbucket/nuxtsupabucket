@@ -63,8 +63,8 @@
       description: subTask.description,
       parentTodoId: subTask.parentTodoId
     })
-
-    emit('updated')
+    navigateTo(`/todo/${subTask.parentTodoId}`)
+    // emit('updated')
   }
   const handleAssigned = async (appUserTenancyId: string) => {
     const result = await GqlAssignTodo({

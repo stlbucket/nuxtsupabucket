@@ -6,6 +6,6 @@
 
 <script lang="ts" setup>
   const getTacos = () => {
-    alert('fuck yeah')
+    alert('oh yeah')
   }
 </script>

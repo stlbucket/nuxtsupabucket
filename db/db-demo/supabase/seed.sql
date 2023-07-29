@@ -55,6 +55,10 @@ select app_fn.subscribe_tenant_to_license_pack(
   _app_tenant_id => (select id from app.app_tenant where identifier = 'demo-tenant-1')::uuid
   ,_license_pack_key => 'my-app'
 );
+select app_fn.subscribe_tenant_to_license_pack(
+  _app_tenant_id => (select id from app.app_tenant where identifier = 'demo-tenant-1')::uuid
+  ,_license_pack_key => 'my-other-app'
+);
 select app_fn.invite_user(
   _app_tenant_id => (select id from app.app_tenant where identifier = 'demo-tenant-1')::uuid
   ,_email => 'demo-tenant-1-user-1@example.com'::citext
